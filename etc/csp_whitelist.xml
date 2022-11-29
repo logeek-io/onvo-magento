@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="onvo-sdk-vercel" type="host">onvo-pay-widget.vercel.app</value>
+                <value id="onvo-sdk" type="host">sdk.onvopay.com</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="onvo-widget-vercel" type="host">onvo-pay-widget.vercel.app</value>
+                <value id="onvo-widget" type="host">sdk.onvopay.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>
