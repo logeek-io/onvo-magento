@@ -18,4 +18,9 @@ interface PayInterface
      * @return mixed
      */
     public function paymentIntentReload($paymentIntentId);
+
+    /**
+     * @return mixed
+     */
+    public function errorReport();
 }

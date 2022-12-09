@@ -261,6 +261,8 @@ define(
                         onvo.pay({
                             onError: (data) => {
                                 console.log(data);
+                                let url = self.getErrorReportUrl();
+                                self.myAjax('POST', `${url}`, JSON.stringify(data));
                             },
                             onSuccess: (data) => {
                                 self.iframeOrderData(data);

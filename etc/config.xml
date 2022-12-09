@@ -27,6 +27,7 @@
                 <paymentInfoKeys>FRAUD_MSG_LIST</paymentInfoKeys>
                 <privateInfoKeys>FRAUD_MSG_LIST</privateInfoKeys>
                 <cctypes>AE,VI,MC,DI</cctypes>
+                <api_url>https://api.onvopay.com/v1</api_url>
             </onvo>
         </payment>
     </default>

@@ -19,9 +19,15 @@ final class ConfigProvider implements ConfigProviderInterface
      */
     protected $config;
 
-    private PayHelper $_onvoHelper;
+    /**
+     * @var PayHelper
+     */
+    private $_onvoHelper;
 
-    private StoreManagerInterface $_storeManager;
+    /**
+     * @var StoreManagerInterface
+     */
+    private $_storeManager;
 
     /**
      * @param Config $config
@@ -51,7 +57,8 @@ final class ConfigProvider implements ConfigProviderInterface
             'payment' => [
                 self::CODE => [
                     'publicKey' => $this->_onvoHelper->getPublicKey(),
-                    'paymentIntentUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/payment-intent"
+                    'paymentIntentUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/payment-intent",
+                    'errorReportUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/error"
                 ]
             ]
         ];

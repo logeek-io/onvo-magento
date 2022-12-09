@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="onvo_pay_intents" resource="default" engine="innodb" comment="ONVO Pay Intents">
+        <column xsi:type="int" name="id" padding="10" unsigned="false" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="pi_id" length="254" nullable="true" comment="Payment Intent ID"/>
+        <column xsi:type="int" name="quote_id" padding="10" unsigned="false" nullable="false" comment="Quote ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNIQUE_QUOTE_ID">
+            <column name="quote_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNIQUE_PAYMENT_INTENT_ID">
+            <column name="pi_id"/>
+        </constraint>
+    </table>
+</schema>

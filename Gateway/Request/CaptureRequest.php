@@ -33,7 +33,10 @@ class CaptureRequest implements BuilderInterface
      */
     private $subjectReader;
 
-    private Logger $_logger;
+    /***
+     * @var
+     */
+    private $_logger;
 
     /**
      * @param ConfigInterface $config

@@ -7,7 +7,10 @@ use ONVO\Pay\Helper\PayHelper;
 
 class Pay implements PayInterface
 {
-    private PayHelper $_onvoHelper;
+    /**
+     * @var PayHelper
+     */
+    private $_onvoHelper;
 
     /**
      * @param PayHelper $onvoHelper
@@ -33,5 +36,13 @@ class Pay implements PayInterface
     public function paymentIntentReload($paymentIntentId)
     {
         $this->_onvoHelper->getPaymentIntent($paymentIntentId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function errorReport()
+    {
+        $this->_onvoHelper->errorReport();
     }
 }
