@@ -94,7 +94,7 @@ class PayHelper
     public function getPaymentIntent($paymentIntentId = null)
     {
         if ($quote = $this->_checkoutSession->getQuote()) {
-            $customerId = ''; //$this->createUpdateCustomer($quote);
+            $customerId = $this->createUpdateCustomer($quote);
 
             $paymentIntentId = $this->createUpdatePaymentIntent($quote, $paymentIntentId, $customerId);
         }
