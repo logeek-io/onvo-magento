@@ -66,6 +66,7 @@ define(
             initObservable: function () {
                 this._super().observe([
                     'onvoPaymentIntentId',
+                    'onvoCustomerId',
                     'isIframeLoaded',
                     'isVisiblePaymentButton',
                     'iframeOrderData',
@@ -74,6 +75,7 @@ define(
                 ]);
                 this.iframeOrderData('');
                 this.onvoPaymentIntentId('');
+                this.onvoCustomerId('');
                 this.isFormLoading(false);
                 this.iframeLoaded(false);
 
@@ -241,6 +243,7 @@ define(
                     }
                     self.myAjax('GET', `${url}?email=${email}`).then(response => {
                         self.onvoPaymentIntentId(JSON.parse(response).payment_intent_id);
+                        self.onvoCustomerId(JSON.parse(response).customer_id);
                         if (self.onvoPaymentIntentId()) {
                             self.renderForm();
                         } else {
@@ -270,6 +273,7 @@ define(
                             },
                             publicKey: self.getPublicKey(),
                             paymentIntentId: self.onvoPaymentIntentId(),
+                            customerId: self.onvoCustomerId(),
                             paymentType: "one_time"
                         }).render('#onvoIframeContainer');
                     }

@@ -93,13 +93,15 @@ class PayHelper
      */
     public function getPaymentIntent($paymentIntentId = null)
     {
+        $customerId = null;
         if ($quote = $this->_checkoutSession->getQuote()) {
             $customerId = $this->createUpdateCustomer($quote);
 
             $paymentIntentId = $this->createUpdatePaymentIntent($quote, $paymentIntentId, $customerId);
         }
         $this->jsonResponse([
-            'payment_intent_id' => $paymentIntentId
+            'payment_intent_id' => $paymentIntentId,
+            'customer_id' => $customerId
         ]);
     }
 
