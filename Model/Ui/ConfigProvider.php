@@ -58,7 +58,8 @@ final class ConfigProvider implements ConfigProviderInterface
                 self::CODE => [
                     'publicKey' => $this->_onvoHelper->getPublicKey(),
                     'paymentIntentUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/payment-intent",
-                    'errorReportUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/error"
+                    'errorReportUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/error",
+                    'validatePaymentIntentUrl' => "/rest/{$this->_storeManager->getStore()->getCode()}/V1/onvo/pay/payment-intent/validate"
                 ]
             ]
         ];

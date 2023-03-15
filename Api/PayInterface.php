@@ -20,6 +20,15 @@ interface PayInterface
     public function paymentIntentReload($paymentIntentId);
 
     /**
+     * Validate if payment intent has 'succeeded' status
+     *
+     * @param string $paymentIntentId
+     * @return mixed
+     */
+    public function validatePaymentIntent($paymentIntentId);
+
+
+    /**
      * @return mixed
      */
     public function errorReport();

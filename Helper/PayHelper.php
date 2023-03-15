@@ -106,6 +106,45 @@ class PayHelper
     }
 
     /**
+     * @param null $paymentIntentId
+     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function validatePaymentIntent($paymentIntentId)
+    {
+        if ($quote = $this->_checkoutSession->getQuote()) {
+            $paymentIntentModel = $this->getPaymentIntentModel($quote->getId());
+            if ($this->getDebugEnabled()) {
+                $this->_logger->debug($paymentIntentModel->getPiId());
+                $this->_logger->debug(json_encode($paymentIntentModel->getData()));
+            }
+
+            if ($paymentIntentModel->getPiId() && $paymentIntentId) {
+                if ($paymentIntentId != $paymentIntentModel->getPiId()) {
+                    return $this->jsonResponse([
+                        "valid" => false
+                    ]);
+                }
+            }
+
+            $url = $this->getApiUrl() . "/payment-intents/{$paymentIntentId}";
+            $result = json_decode(curlCall(
+                $url, [], null,
+                $this->getSecretKey()
+            ), true);
+            if(isset($result['status'])) {
+                return $this->jsonResponse([
+                    "valid" => $result['status'] === 'succeeded',
+                    "result" => $result
+                ]);
+            }
+        }
+        return $this->jsonResponse([
+            "valid" => false
+        ]);
+    }
+
+    /**
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */

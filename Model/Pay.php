@@ -41,6 +41,13 @@ class Pay implements PayInterface
     /**
      * @inheritDoc
      */
+    public function validatePaymentIntent($paymentIntentId) {
+        $this->_onvoHelper->validatePaymentIntent($paymentIntentId);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function errorReport()
     {
         $this->_onvoHelper->errorReport();

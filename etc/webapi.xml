@@ -12,6 +12,12 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route url="/V1/onvo/pay/payment-intent/validate/:paymentIntentId" method="GET">
+        <service class="ONVO\Pay\Api\PayInterface" method="validatePaymentIntent"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
     <route url="/V1/onvo/pay/error" method="POST">
         <service class="ONVO\Pay\Api\PayInterface" method="errorReport"/>
         <resources>

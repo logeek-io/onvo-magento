@@ -264,8 +264,15 @@ define(
                         onvo.pay({
                             onError: (data) => {
                                 console.log(data);
-                                let url = self.getErrorReportUrl();
-                                self.myAjax('POST', `${url}`, JSON.stringify(data));
+                                self.myAjax('GET', `${self.getValidatePaymentIntentUrl()}/${self.onvoPaymentIntentId()}`)
+                                    .then(response => {
+                                        if(JSON.parse(response).valid) {
+                                            self.iframeOrderData(data);
+                                            self.placeOrder();
+                                        } else {
+                                            self.myAjax('POST', `${self.getErrorReportUrl()}`, JSON.stringify(data));
+                                        }
+                                    });
                             },
                             onSuccess: (data) => {
                                 self.iframeOrderData(data);
@@ -341,6 +348,14 @@ define(
 
             getPaymentIntentUrl: function () {
                 return this.getConfig().paymentIntentUrl;
+            },
+
+            getValidatePaymentIntentUrl: function () {
+                return this.getConfig().validatePaymentIntentUrl;
+            },
+
+            getErrorReportUrl: function () {
+                return this.getConfig().errorReportUrl;
             },
 
             isLoggedIn: function () {
