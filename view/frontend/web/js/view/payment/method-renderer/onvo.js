@@ -263,16 +263,34 @@ define(
                         self.iframeLoaded(true)
                         onvo.pay({
                             onError: (data) => {
+                                body.trigger('processStart');
                                 console.log(data);
-                                self.myAjax('GET', `${self.getValidatePaymentIntentUrl()}/${self.onvoPaymentIntentId()}`)
-                                    .then(response => {
-                                        if(JSON.parse(response).valid) {
-                                            self.iframeOrderData(data);
-                                            self.placeOrder();
-                                        } else {
-                                            self.myAjax('POST', `${self.getErrorReportUrl()}`, JSON.stringify(data));
-                                        }
-                                    });
+                                let isValid = false,
+                                    tries = 0;
+                                const triesInterval = setInterval(() => {
+                                    self.myAjax('GET', `${self.getValidatePaymentIntentUrl()}/${self.onvoPaymentIntentId()}`)
+                                        .then(response => {
+                                            let reValidResponse = JSON.parse(response);
+                                            if(reValidResponse.valid) {
+                                                if(!isValid) {
+                                                    clearInterval(triesInterval);
+                                                    body.trigger('processStop');
+
+                                                    isValid = true;
+                                                    reValidResponse.status = 'succeeded';
+                                                    self.iframeOrderData(reValidResponse);
+                                                    self.placeOrder();
+                                                }
+                                            } else {
+                                                tries++;
+                                            }
+                                            if(tries >= 10) {
+                                                clearInterval(triesInterval);
+                                                body.trigger('processStop');
+                                                self.myAjax('POST', `${self.getErrorReportUrl()}`, JSON.stringify(data));
+                                            }
+                                        });
+                                }, 1000);
                             },
                             onSuccess: (data) => {
                                 self.iframeOrderData(data);
